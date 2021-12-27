@@ -24,7 +24,7 @@ In *Work Area*, we created a new section in the right rail, above the rightRails
 Left Rail | Workflow | Right Rail
 | :--- | :---: | ---:
 Nav  | Workflow | Fixed Component
-   |   | Right Rail
+ - | - | Right Rail
 
 In *Dynamic Manager*, modifications were made to handle 'fixedExtensions' templates.
 - The fixed component is created when the workflow is initiated. For example, if the 'claim_summary_workflow' action has a fixed component, it will be created and displayed when the claim_summary_workflow component is also created.
