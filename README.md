@@ -8,7 +8,7 @@ Base code for calling Azure JWT SSO from Salesforce using Apex
 - echo $(openssl x509 -in <certname>.crt -fingerprint -noout) | sed "s/SHA1 Fingerprint=//g" | sed "s/://g" | xxd -r -ps | base64
 3. Go to your Azure app and upload the .crt file in the section 'Certificates and Secrets'.
 4. Create a new Remote Site Setting in Salesforce for 'https://login.microsoftonline.com'. This will allow us to make the callout to Azure.
-5. Import the components from the remote repository.
+5. Import the components from the remote repository. Note that you'll need to change line 9 of the Apex Class 'JWTAzureController' to the name of your certificate.
 6. Create an Org Default custom setting configuration for the custom setting object Azure SSO
 7. Add the LWC component azureSSO to any lightning page in Salesforce. Test getting the token by clicking the 'Token' button. If a token is returned, the custom setting will be updated with the token value, and will also display on the screen.
 
