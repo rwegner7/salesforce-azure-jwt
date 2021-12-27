@@ -37,6 +37,53 @@ In *Dynamic Manager*, modifications were made to handle 'fixedExtensions' templa
 	- Once a component is deleted, it cannot be recreated if the workflow is clicked on again. TODO??
 	- The LMS message can be sent from any component on the UI.
 
+```
+    //properties
+    subscriptionDestroy;
+    destroyedTemplates = [];
+    FIXED_EXTENSION = 'fixedExtensions';
+
+    connectedCallback() {
+        ...
+        //subscribe to the destroy component message channel
+        this.subscriptionDestroy = subscribe(this.messageContext, destroy, (message) => this.handleDestroyMessage(message),{});
+        ...
+        this.activateTemplates();
+    }
+
+    //remove a component from active templates by its key, used for fixed extensions
+    handleDestroyMessage({ key }) {
+        if(this.templateType === this.FIXED_EXTENSION) {
+            const templates = this.activeTemplates;
+            const itemToRemoveIndex = templates.findIndex(item => item.key && item.key.split(":")[0] === key);
+
+            // proceed to remove an item only if it exists.
+            if (itemToRemoveIndex !== -1) {
+                templates.splice(itemToRemoveIndex, 1);
+                this.destroyedTemplates.push(key);
+            }
+
+            this.activeTemplates = [...templates];
+        }
+    }
+
+    activateTemplates() {
+        ...
+        // add to active templates based on the type of template
+        if(this.templateType === this.FIXED_EXTENSION){//fixed extension templates
+            // exit if the action has already been added, or if has already been destroyed
+            const actionCheck = (el) => el.hasOwnProperty('key') && el.key === this._activeAction;
+            if (this.activeTemplates.some(actionCheck) || this.destroyedTemplates.includes(this._activeAction.split(":")[0])) return;
+            //otherwise add the fixed extension to the template list to display
+            const templates = this.activeTemplates;
+            templates.push(template);
+            this.activeTemplates = [...templates];
+        }else{ //all other templates
+            this.activeTemplates = [template].concat(hiddenTemplates);
+        }
+    }
+
+```
 
 METADATA LIST
 ### Message Channel
