@@ -1,5 +1,5 @@
 # salesforce-azure-jwt
-Base code for calling Azure JWT SSO from Salesforce using Apex
+Base code for calling Azure JWT SSO from Salesforce using Apex. The received token is stored in a Custom Setting.
 
 ## Setup Instructions
 1. Create an app in Azure to authenticate against. Skip this step if you already have one.
