@@ -13,7 +13,7 @@ echo $(openssl x509 -in AzureSSO.crt -fingerprint -noout) | sed "s/SHA1 Fingerpr
 3. Go to your Azure app and upload the .crt file in the section *Certificates and Secrets*.
    	1. Copy the Azure thumbprint from the cert that was uploaded, use the below command in a terminal window to get the x5t value of the thumbprint. Store it for later.
 ```
-echo -n "<AZURETHUMBPRINTHERE>"| openssl sha1 -binary | base64
+echo 'AZURETHUMBPRINTHERE' | sed 's/://g' | xxd -r -ps | base64
 ```
 5. In Salesforce, go to Setup > Remote Site Settings and create a new Remote Site Setting for the url 'https://login.microsoftonline.com'. This will allow us to make the callout to Azure.
 6. Deploy the components from the *force-app* folder in this repository to your Salesforce org. 
